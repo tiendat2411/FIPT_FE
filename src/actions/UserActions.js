@@ -36,11 +36,11 @@ export const loginUser = (userData) => async (dispatch) => {
     try {
         dispatch(loginRequest())
 
-        const { data } = await axios.post("http://localhost:3000/api/v1/login", userData);
+        const { data } = await axios.post("http://localhost:8080/auth/token", userData);
 
         dispatch(loginSuccess())
-        localStorage.setItem('userToken', data.token)
-        dispatch(logOrNot())
+        localStorage.setItem('userToken', data.result.token)
+        dispatch(logOrNot(userData))
         dispatch(me())
         toast.success("Login successful !")
 
@@ -51,7 +51,7 @@ export const loginUser = (userData) => async (dispatch) => {
 }
 
 
-export const logOrNot = () => async (dispatch) => {
+export const logOrNot = (userData) => async (dispatch) => {
     try {
         dispatch(isLoginRequest())
         const config = {
@@ -59,11 +59,15 @@ export const logOrNot = () => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem('userToken')}`
             }
         }
+        
+        const body = {
+            email: userData.email,
+            password: userData.password,
+        };
 
-        const { data } = await axios.get("http://localhost:3000/api/v1/isLogin", config);
+        const { data } = await axios.post("http://localhost:8080/user/isLogin", body, config);
 
-        dispatch(isLoginSuccess(data.isLogin))
-
+        dispatch(isLoginSuccess(data.result.isLogin))
 
 
     } catch (err) {
@@ -81,11 +85,11 @@ export const me = () => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.get("http://localhost:3000/api/v1/me", config);
+        const { data } = await axios.get("http://localhost:8080/user/myInfo", config);
         
-        localStorage.setItem("role", data.user.role)
+        localStorage.setItem("role", data.result.role)
 
-        dispatch(getMeSuccess(data.user))
+        dispatch(getMeSuccess(data.result))
 
     } catch (err) {
         dispatch(getMeFail())

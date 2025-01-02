@@ -64,7 +64,7 @@ export const Navbar = () => {
                   <Avatar
                     className="cursor-pointer fixed right-32"
                     radius="xl"
-                    src={me.avatar.url}
+                    src={me.avatar}
                     alt="it's me"
                   />
                 </Menu.Target>

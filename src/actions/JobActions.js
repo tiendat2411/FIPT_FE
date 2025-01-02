@@ -31,9 +31,15 @@ export const getAllJobs = () => async (dispatch) => {
     try{
         dispatch(allJobsRequest()) ;
 
-        const {data} = await axios.get("http://localhost:3000/api/v1/jobs") ;
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('userToken')}`
+            } 
+        }
 
-        dispatch(allJobsSuccess(data.Jobs)) ;
+        const {data} = await axios.get("http://localhost:8080/jobs", config) ; 
+        console.log(data.result);
+        dispatch(allJobsSuccess(data.result));
 
     }catch(err){
         dispatch(allJobsFail(err.response.data.message))   

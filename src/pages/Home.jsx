@@ -77,7 +77,7 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(getAllJobs());
-  }, []);
+  }, [dispatch]);
 
   const convertDateFormat = (inputDate) => {
     const parts = inputDate.split('-');
@@ -127,24 +127,24 @@ export const Home = () => {
               ) : (
                 <div>
                   <div className="flex md:flex-row flex-col gap-3">
-                    {allJobs && allJobs.length >= 4 ? (
+                    {allJobs && Array.isArray(allJobs) && allJobs.length >= 2 ? (
                       <>
                         <Link
-                          to={`/details/${allJobs[0]._id}`}
+                          to={`/details/${allJobs[0].id}`}
                           className="flex gap-2 shadow-sm shadow-gray-800 border border-gray-700 md:w-[26rem] w-[21rem] p-2 flex-col hover:border-rose-500 transition duration-300 hover:scale-[1.02] hover:bg-slate-950"
                         >
                           <div className="flex gap-3">
                             <div className="w-[5rem] flex justify-center items-center">
                               <img
-                                src={allJobs[0].companyLogo.url}
-                                alt={allJobs[0].title}
+                                src={allJobs[0].imageUrls[0]}
+                                alt={allJobs[0].name}
                                 className="w-[4rem]"
                               />
                             </div>
                             <div>
-                              <p className="text-xl">{allJobs[0].title}</p>
+                              <p className="text-xl">{allJobs[0].name}</p>
                               <p className="text-lg">
-                                {allJobs[0].companyName}
+                                {allJobs[0].employer}
                               </p>
                               <p className="text-sm">
                                 {allJobs[0].description.slice(0, 30) + '...'}
@@ -154,30 +154,30 @@ export const Home = () => {
                           <div className="flex text-sm gap-8">
                             <span>
                               {convertDateFormat(
-                                allJobs[0].createdAt.slice(0, 10)
+                                allJobs[0].recruitedDate.slice(0, 10)
                               )}
                             </span>
-                            <span>{allJobs[0].employmentType}</span>
-                            <span>{allJobs[0].location}</span>
+                            <span>{allJobs[0].jobCategory}</span>
+                            <span>{allJobs[0].address}</span>
                           </div>
                         </Link>
 
                         <Link
-                          to={`/details/${allJobs[1]._id}`}
+                          to={`/details/${allJobs[1].id}`}
                           className="flex gap-2 shadow-sm shadow-gray-800 border border-gray-700 md:w-[26rem] w-[21rem] p-2 flex-col hover:border-rose-500 transition duration-300 hover:scale-[1.02] hover:bg-slate-950"
                         >
-                          <div className="flex gap-3 ">
-                            <div className="w-[5rem]  flex justify-center items-center">
+                          <div className="flex gap-3">
+                            <div className="w-[5rem] flex justify-center items-center">
                               <img
-                                src={allJobs[1].companyLogo.url}
-                                alt={allJobs[1].title}
+                                src={allJobs[1].imageUrls[0]}
+                                alt={allJobs[1].name}
                                 className="w-[4rem]"
                               />
                             </div>
                             <div>
-                              <p className="text-xl">{allJobs[1].title}</p>
+                              <p className="text-xl">{allJobs[1].name}</p>
                               <p className="text-lg">
-                                {allJobs[1].companyName}
+                                {allJobs[1].employer}
                               </p>
                               <p className="text-sm">
                                 {allJobs[1].description.slice(0, 30) + '...'}
@@ -187,30 +187,30 @@ export const Home = () => {
                           <div className="flex text-sm gap-8">
                             <span>
                               {convertDateFormat(
-                                allJobs[0].createdAt.slice(0, 10)
+                                allJobs[1].recruitedDate.slice(0, 10)
                               )}
                             </span>
-                            <span>{allJobs[1].employmentType}</span>
-                            <span>{allJobs[1].location}</span>
+                            <span>{allJobs[1].jobCategory}</span>
+                            <span>{allJobs[1].address}</span>
                           </div>
                         </Link>
 
                         <Link
-                          to={`/details/${allJobs[2]._id}`}
+                          to={`/details/${allJobs[2].id}`}
                           className="flex gap-2 shadow-sm shadow-gray-800 border border-gray-700 md:w-[26rem] w-[21rem] p-2 flex-col hover:border-rose-500 transition duration-300 hover:scale-[1.02] hover:bg-slate-950"
                         >
                           <div className="flex gap-3">
-                            <div className="w-[5rem]  flex justify-center items-center">
+                            <div className="w-[5rem] flex justify-center items-center">
                               <img
-                                src={allJobs[2].companyLogo.url}
-                                alt={allJobs[2].title}
+                                src={allJobs[2].imageUrls[0]}
+                                alt={allJobs[2].name}
                                 className="w-[4rem]"
                               />
                             </div>
                             <div>
-                              <p className="text-xl">{allJobs[2].title}</p>
+                              <p className="text-xl">{allJobs[2].name}</p>
                               <p className="text-lg">
-                                {allJobs[2].companyName}
+                                {allJobs[2].employer}
                               </p>
                               <p className="text-sm">
                                 {allJobs[2].description.slice(0, 30) + '...'}
@@ -220,15 +220,16 @@ export const Home = () => {
                           <div className="flex text-sm gap-8">
                             <span>
                               {convertDateFormat(
-                                allJobs[2].createdAt.slice(0, 10)
+                                allJobs[2].recruitedDate.slice(0, 10)
                               )}
                             </span>
-                            <span>{allJobs[2].employmentType}</span>
-                            <span>{allJobs[2].location}</span>
+                            <span>{allJobs[2].jobCategory}</span>
+                            <span>{allJobs[2].address}</span>
                           </div>
                         </Link>
                       </>
-                    ) : null}
+                    ) : null
+                    }
                   </div>
                 </div>
               )}

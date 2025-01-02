@@ -7,21 +7,13 @@ const ApplicationSlice = createSlice({
         error: null,
         appliedJobs: [],
         applicationDetails: {
-          applicant:{  _id: "",
-            name: "",
-            email: ""
-          },
-          applicantResume:{
-            public_id:"",
-            url:""
-          },
-          job: {
             _id: "",
-            title: "",
-            companyName: ""
-          },
-          status: "",
-          createdAt: "" ,          
+            user: "",
+            employer: "",
+            job: "",
+            date: "",
+            status: "",
+            cvUrls: ""
         }
     },
     reducers:{

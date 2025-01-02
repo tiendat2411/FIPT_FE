@@ -10,11 +10,10 @@ const AdminSlice = createSlice({
         error: null,
         applicationData: {
             job: {
-                title: "",
-                companyName: "",
-                location: "",
-                experience: "",
-                companyName: ""
+                name: "",
+                employer: "",
+                category: "",
+                address: "",
             },
             applicant: {
                 name: "",
@@ -29,25 +28,20 @@ const AdminSlice = createSlice({
         userData: {
             name: "",
             email: "",
-            role: "",
             createdAt: "",
             avatar: {
                 url: "",
             },
         },
         jobData: {
-            title: "",
+            name: "",
             description: "",
-            companyName: "",
-            companyLogo: {
-                url: ""
-            },
-            location: "",
-            skillsRequired: [],
+            employer: "",
+            imageUrls: [],
+            address: "",
+            requirements: "",
             category: "",
-            employmentType: "",
-            experience: "",
-            salary: ""
+            wage: ""
         }
     },
     reducers: {
@@ -210,7 +204,7 @@ export const {
     getUserRequest, getUserSuccess, getUserFail,
     updateUserRequest, updateUserSuccess, updateUserFail,
     deleteUserRequest, deleteUserSuccess, deleteUserFail,
-    
+
     getJobRequest, getJobSuccess, getJobFail,
     updateJobRequest, updateJobSuccess, updateJobFail,
     deleteJobRequest, deleteJobSuccess, deleteJobFail

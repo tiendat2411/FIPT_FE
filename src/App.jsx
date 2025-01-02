@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css';
 import { Home } from './pages/Home'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
@@ -7,7 +8,6 @@ import { Jobs } from './pages/Jobs'
 import { Contact } from './pages/Contact'
 import { About } from './pages/About'
 import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 import { MyProfile } from './pages/MyProfile'
 import { AppliedJobs } from './pages/AppliedJobs'
 import { SavedJobs } from './pages/SavedJobs'
@@ -73,10 +73,10 @@ function App() {
 
   return (
     <>
-       <ScrollToTopWhenRouteChanges/>
+      <ScrollToTopWhenRouteChanges />
       <Navbar />
       <Routes>
-        
+
         <Route exact path='/' element={<Home />} />
         <Route path='/jobs' element={<Jobs />} />
         <Route path='/contact' element={<Contact />} />

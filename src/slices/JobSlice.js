@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const JobSlice = createSlice({
-    name: 'Job',
+    name: 'job',
     initialState: {
         loading: false,
         saveJobLoading: false,
@@ -9,22 +9,38 @@ const JobSlice = createSlice({
         jobDetails: {
             __v: 0,
             _id: "",
-            category: "",
-            companyLogo: {
-                public_id: "",
-                url: ""
-            },
-            companyName: "",
-            createdAt: "",
+            name: "",
+            jobValue: "",
+            user: "",
             description: "",
-            employmentType: "",
-            experience: "",
-            location: "",
-            postedBy: "",
-            salary: "",
-            skillsRequired: [],
-            status: "",
-            title: " "
+            recruitedDate: "",
+            acceptedDate: "",
+            jobCategory: "",
+            wage: 0,
+            address: "",
+            contactInfo: "",
+            requirements: "",
+            employer: "",
+            schedule:[],
+            imageUrls: [],
+            status: ""
+        },
+        jobValue: {
+            __v: 0,
+            _id: "",
+            job: "",
+            commnunicationSkill: 0,
+            collaborationSkill: 0,
+            problemSolvingSkill: 0,
+            networkingSkill: 0,
+            expertiseSkill1: 0,
+            expertiseSkill2: 0,
+            expertiseSkill3: 0,
+            wageScore: 0,
+            timeScore: 0,
+            mainExpertiseSkill1: "",
+            mainExpertiseSkill2: "",
+            mainExpertiseSkill3: "",
         },
         savedJobs:[],
         allJobs: []
@@ -100,4 +116,4 @@ export const { newPostRequest, newPostSuccess, newPostFail, allJobsRequest, allJ
     getSavedJobsRequest, getSavedJobsSuccess, getSavedJobsFail
 } = JobSlice.actions;
 
-export default JobSlice.reducer
+export default JobSlice.reducer;
