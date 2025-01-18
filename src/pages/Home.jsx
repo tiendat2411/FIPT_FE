@@ -77,6 +77,7 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(getAllJobs());
+    console.log(localStorage.getItem('role'));
   }, [dispatch]);
 
   const convertDateFormat = (inputDate) => {

@@ -28,21 +28,21 @@ export const JobCard = ({ job }) => {
     return (
         <>
 
-            <Link to={`/details/${job._id}`} className='text-white flex flex-col gap-2  shadow-sm shadow-gray-800 border border-gray-700 md:px-4 px-3 w-full py-2'>
+            <Link to={`/details/${job.id}`} className='text-white flex flex-col gap-2  shadow-sm shadow-gray-800 border border-gray-700 md:px-4 px-3 w-full py-2'>
 
                 <div className='flex gap-5 relative'>
                     <div className='flex justify-center items-center  '>
-                        <img src={job.companyLogo.url} className=' w-[4rem]  ' alt="" />
+                        <img src={job.imageUrls[0]} className=' w-[4rem]  ' alt="" />
                     </div>
                     <div className='flex flex-col '>
 
                         <div>
-                            <p className='md:text-xl text-lg'>{job.title}</p>
+                            <p className='md:text-xl text-lg'>{job.name}</p>
                         </div>
                         <div className='flex justify-between gap-2 '>
                             <div className='flex flex-col gap-1'>
-                                <p className='text-sm'>{job.companyName}</p>
-                                <p className='text-sm'>{job.exp}</p>
+                                <p className='text-sm'>{job.employer}</p>
+                                <p className='text-sm'>{job.description}</p>
                               {!isMobile && <p className='text-sm flex '>{job.description.slice(0, 64)}...</p>}
                                 <p className='text-sm flex md:hidden'>{job.description.slice(0, 39)}...</p>
                             </div>
@@ -59,9 +59,9 @@ export const JobCard = ({ job }) => {
                 </div>
 
                 <div className='flex md:gap-8 gap-3 md:text-sm text-xs'>
-                    <span>{convertDateFormat(job.createdAt.substr(0, 10))}</span>
-                    <span>{job.employmentType}</span>
-                    <span>{job.location}</span>
+                    <span>{convertDateFormat(job.recruitedDate.substr(0, 10))}</span>
+                    <span>{job.jobCategory}</span>
+                    <span>{job.address}</span>
                 </div>
 
             </Link>

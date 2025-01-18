@@ -19,7 +19,7 @@ export const Register = () => {
 
   const [eyeTog, setEyeTog] = useState(false)
 
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [skills, setSkills] = useState("");
@@ -66,26 +66,25 @@ export const Register = () => {
   const registerHandler = (e) => {
     e.preventDefault()
 
-    const skillsArr = skills.split(",")
+    // const skillsArr = skills.split(",")
     const data = {
-      name,
+      username,
       email,
       password,
-      avatar,
-      resume,
-      skills: skillsArr
+      role: "USER",
+      isActive: true,
     }
 
     dispatch(registerUser(data))
 
-    setName("")
+    setUserName("")
     setEmail("")
     setPassword("")
-    setAvatar("")
-    setAvatarName("")
-    setResume("")
-    setResumeName("")
-    setSkills("")
+    // setAvatar("")
+    // setAvatarName("")
+    // setResume("")
+    // setResumeName("")
+    // setSkills("")
 
   }
 
@@ -114,7 +113,7 @@ export const Register = () => {
                 <div className='text-gray-600 px-2'>
                   <MdPermIdentity size={20} />
                 </div>
-                <input value={name} onChange={(e) => setName(e.target.value)} required placeholder='Full name' type="text" className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2' />
+                <input value={username} onChange={(e) => setUserName(e.target.value)} required placeholder='Username' type="text" className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2' />
               </div>
 
 
@@ -139,7 +138,7 @@ export const Register = () => {
                 </div>
               </div>
 
-              {/* Profile */}
+{/* 
               <div>
                 <div className='bg-white flex justify-center items-center'>
                   <div className='text-gray-600 px-2'>
@@ -183,7 +182,7 @@ export const Register = () => {
                   <MdOutlineFeaturedPlayList size={20} />
                 </div>
                 <textarea value={skills} onChange={(e) => setSkills(e.target.value)} placeholder='Skills' type="text" className='outline-none w-full text-black bold-placeholder px-1 pr-3 py-2' />
-              </div>
+              </div> */}
 
 
               <div>

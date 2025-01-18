@@ -25,9 +25,9 @@ export const getAllJobsAdmin = () => async (dispatch) => {
             } 
         }
 
-        const {data} = await axios.get("http://localhost:3000/api/v1/admin/allJobs",config) ;
+        const {data} = await axios.get("http://localhost:8080/jobs/all-jobs",config) ;
 
-        dispatch(getAllJobsSuccess(data.jobs))
+        dispatch(getAllJobsSuccess(data.result))
 
     }catch(err){
         dispatch(getAllJobsFail(err.response.data.message)) ;
@@ -44,9 +44,9 @@ export const getAllUsersAdmin = () => async (dispatch) => {
             } 
         }
 
-        const {data} = await axios.get("http://localhost:3000/api/v1/admin/allUsers",config) ;
+        const {data} = await axios.get("http://localhost:8080/user/all-users",config) ;
 
-        dispatch(getAllUsersSuccess(data.users))
+        dispatch(getAllUsersSuccess(data.result))
 
     }catch(err){
         dispatch(getAllUsersFail(err.response.data.message)) ;
@@ -64,9 +64,9 @@ export const getAllAppAdmin = () => async (dispatch) => {
             } 
         }
 
-        const {data} = await axios.get("http://localhost:3000/api/v1/admin/allApp",config) ;
+        const {data} = await axios.get("http://localhost:8080/applications",config) ;
 
-        dispatch(getAllAppSuccess(data.applications))
+        dispatch(getAllAppSuccess(data.result))
 
     }catch(err){
         dispatch(getAllAppFail(err.response.data.message)) ;

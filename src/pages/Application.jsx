@@ -23,8 +23,13 @@ export const Application = () => {
   }, []);
 
   const makeApplication = (e) => {
-    e.preventDefault() ;
-    dispatch(createApplication(id));
+    e.preventDefault();
+    const data = {
+      user: me._id,
+      job: id,
+      cvUrls: me.resume,
+    };
+    dispatch(createApplication(data));
     navigate(`/details/${id}`);
   };
 
@@ -35,7 +40,7 @@ export const Application = () => {
         <div className="px-3 ">
           <div className="py-2">
             <p className="text-4xl py-2 pb-2">
-              Apply to {jobDetails.companyName}
+              Apply to {jobDetails.employerName}
             </p>
             <p className="text-xl">Job Id: {id}</p>
           </div>
@@ -45,10 +50,10 @@ export const Application = () => {
             <div>
               <ul>
                 <li className="flex gap-4 items-center">
-                  Role: <div>{jobDetails.title}</div>
+                  Role: <div>{jobDetails.name}</div>
                 </li>
                 <li className="flex gap-4 items-center">
-                  Location: <div>{jobDetails.location}</div>
+                  Location: <div>{jobDetails.address}</div>
                 </li>
                 <li className="flex gap-4 items-center">
                   Experience: <div>{jobDetails.experience}</div>
@@ -62,7 +67,7 @@ export const Application = () => {
             <div>
               <ul>
                 <li className="flex gap-4 items-center">
-                  Name: <div>{me.name}</div>
+                  Name: <div>{me.fristName} {me.lastName}</div>
                 </li>
                 <li className="flex gap-4 items-center">
                   Email: <div>{me.email}</div>
@@ -71,12 +76,12 @@ export const Application = () => {
                   Resume:{' '}
                   <Link
                     path="_blank"
-                    to={me.resume.url}
+                    to={me.resume}
                     target="_blank"
                     rel="noreferrer"
                     className="text-blue-500 underline cursor-pointer"
                   >
-                    {me.name} resume
+                    {me.firstName} resume
                   </Link>
                 </li>
               </ul>

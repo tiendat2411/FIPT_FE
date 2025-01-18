@@ -73,7 +73,7 @@ export const JobDetails = () => {
                   {/* <img src={jobDetails && jobDetails.companyLogo.url} className='md:h-32 h-24 w-24 md:w-32' alt="" /> */}
                 {/* </div> */}
                 <div className='flex  items-center w-[6rem]'>
-                  <img src={jobDetails && jobDetails.companyLogo.url} className='' alt="" />
+                  <img src={jobDetails && jobDetails.imageUrls} className='' alt="" />
                 </div>
                 <div className='flex flex-col gap-2 md:pt-2'>
                   <p className='text-xl flex gap-1 items-center  md:text-3xl'><BiBriefcase /> {jobDetails.title}</p>
@@ -96,12 +96,13 @@ export const JobDetails = () => {
                 </div>
                 <div>
                   <ul className='flex flex-col gap-3'>
-                    <li className='flex items-center gap-3'>Posted By: <div>{jobDetails.postedBy.name}</div></li>
-                    <li className='flex items-center gap-3'>Posted At: <div>{convertDateFormat(jobDetails.createdAt.substr(0, 10))}</div></li>
-                    <li className='flex items-center gap-3'>Location: <div> {jobDetails.location}</div></li>
-                    <li className='flex items-center gap-3'>Salary: <div className='flex items-center' ><BiRupee />  <span>{(jobDetails.salary  / 100000).toFixed(0)} LPA</span></div></li>
-                    <li className='flex items-center gap-3'>Experience: <div> {jobDetails.experience}</div></li>
-                    <li className='flex items-center gap-3'>Skills Required: <div className='flex flex-wrap items-center gap-3'> {jobDetails.skillsRequired.map((e,i) => (<span key={i} className='px-2 py-0.5 bg-yellow-600 rounded text-black md:text-sm font-semibold text-xs'>{e}</span>))}                     </div></li>
+                    <li className='flex items-center gap-3'>Posted By: <div>{jobDetails.employerName}</div></li>
+                    <li className='flex items-center gap-3'>Posted At: <div>{convertDateFormat(jobDetails.recruitedDate.substr(0, 10))}</div></li>
+                    <li className='flex items-center gap-3'>Location: <div> {jobDetails.address}</div></li>
+                    <li className='flex items-center gap-3'>Salary: <div className='flex items-center' ><span>{jobDetails.wage} đồng/giờ</span></div></li>
+                    <li className='flex items-center gap-3'>Experience: <div> 0years </div></li>
+                    {/* <li className='flex items-center gap-3'>Skills Required: <div className='flex flex-wrap items-center gap-3'> {jobDetails.skillsRequired.map((e,i) => (<span key={i} className='px-2 py-0.5 bg-yellow-600 rounded text-black md:text-sm font-semibold text-xs'>{e}</span>))}                     </div></li> */}
+                    <li className='flex items-center gap-3'>Skills Required: <div className='flex flex-wrap items-center gap-3'> {jobDetails.requirements} </div></li>
                     <li className='grid gird-cols-1 gap-2 pt-2'><div className='text-2xl'>Job Description: </div> <div> {jobDetails.description}</div></li>
                   </ul>
                 </div>
@@ -114,7 +115,7 @@ export const JobDetails = () => {
                     isLogin ?
 
                     me.appliedJobs && me.appliedJobs.includes(jobDetails._id) ? toast.error("You are already applied !") :
-                    navigate(`/Application/${jobDetails._id}`)
+                    navigate(`/Application/${id}`)
 
                     :
                     notLoginHandler("apply")

@@ -29,6 +29,9 @@ export const MyProfile = () => {
     return `${day}-${month}-${year}`;
   }
 
+  useEffect(() => {
+    console.log(localStorage.getItem('role'));
+  }, [])
   
 
 
@@ -39,7 +42,7 @@ export const MyProfile = () => {
       <MetaData title="My Profile" />
       <div className='bg-gray-950 min-h-screen pt-14  md:px-20 px-3  text-white'>
         {
-          loading ? <Loader /> :
+          !isLogin ? <Loader /> :
             <>
               <div className='text-left text-3xl  underL absolute   pl-4 underline-offset-8 md:pt-6 pt-3'>
                 <span className=' font-medium  '>My Profile</span>
@@ -51,7 +54,7 @@ export const MyProfile = () => {
                 <div className=' md:w-1/2 w-full md:pb-0 pt-16  md:pt-10 gap-8 flex flex-col justify-start items-center '>
                   <div className=' w-72 h-72 flex md:justify-center justify-start items-center  '>
 
-                    <img src={me.avatar.url} className='rounded-full w-full h-full' alt="" />
+                    <img src={me.avatar} className='rounded-full w-full h-full' alt="" />
                   </div>
                   <div className='flex justify-center items-center'>
                     <Link to="/editProfile" className='blueCol px-10 py-2 font-semibold'>Edit Profile</Link>
@@ -64,7 +67,7 @@ export const MyProfile = () => {
                   <div className='flex flex-col md:gap-5 gap-6'>
                     <div>
                       <p className='md:text-2xl text-xl'>Full Name</p>
-                      <p className='md:text-xl pt-1 text-lg'>{me.name}</p>
+                      <p className='md:text-xl pt-1 text-lg'>{me.firstName} {me.lastName}</p>
                     </div>
                     <div>
                       <p className='md:text-2xl text-xl'>Email</p>
@@ -72,16 +75,16 @@ export const MyProfile = () => {
                     </div>
                     <div>
                       <p className='md:text-2xl text-xl'>Joined On</p>
-                      <p className='md:text-xl pt-1 text-lg'>{convertDateFormat(me.createdAt.substr(0, 10))}</p>
+                      <p className='md:text-xl pt-1 text-lg'>{convertDateFormat(me.account.creationDate.substr(0, 10))}</p>
                     </div>
-                    <div>
+                    {/* <div>
                       <p className='md:text-2xl text-xl'>Skills</p>
                       <div className='md:text-xl text-lg pt-3 flex gap-3'>{
                         me.skills.map((skill, i) => (
                           <span key={i} className='bg-yellow-500 text-black  text-sm px-2 py-1  font-bold '>{skill}</span>
                         ))
                       }</div>
-                    </div>
+                    </div> */}
 
 
 
@@ -110,7 +113,7 @@ export const MyProfile = () => {
                 </div>
                 <Modal opened={opened} onClose={close} title="Resume">
                   <div>
-                    <img src={me.resume.url} className='w-full h-full' alt="" />
+                    <img src={me.resume} className='w-full h-full' alt="" />
                   </div>
                  
                 </Modal>
@@ -119,10 +122,6 @@ export const MyProfile = () => {
               </div>
 
             </>
-
-
-
-
 
         }
 

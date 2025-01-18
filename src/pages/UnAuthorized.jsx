@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 function UnAuthorized() {
+  useEffect(() => {
+    console.log(localStorage.getItem('role'));
+  }, [])
 
     return (
         <main className="flex flex-col md:flex-col xl:flex-row w-100 px-4 py-20 sm:px-6 md:px-8 lg:px-10 bg-black">

@@ -73,8 +73,8 @@ export const EditUserAdmin = () => {
                                     <div className='flex gap-3  pt-4 py-2 text-sm justify-start items-center'>
                                         <select onChange={(e) => setRole(e.target.value)} id="large" className="block w-full px-6 py-2 text-base  border  bg-gray-900 border-gray-600 placeholder-gray-400 text-white ">
                                             <option value="not" selected>Select Status</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="applicant">Applicant</option>
+                                            <option value="ADMIN">Admin</option>
+                                            <option value="USER">Applicant</option>
                                         </select>
                                     </div>
                                     <div className='flex gap-3 font-semibold  py-2 text-sm '>

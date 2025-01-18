@@ -43,7 +43,9 @@ const JobSlice = createSlice({
             mainExpertiseSkill3: "",
         },
         savedJobs:[],
-        allJobs: []
+        allJobs: [],
+        jobPerPage: [],
+        totalPages: 0,
     },
     reducers: {
         newPostRequest: (state) => {
@@ -69,6 +71,28 @@ const JobSlice = createSlice({
             state.error = action.payload;
         },
 
+        jobPerPageRequest: (state) => {
+            state.loading = true;
+        },
+        jobPerPageSuccess: (state, action) => {
+            state.loading = false;
+            state.jobPerPage = action.payload;
+        },
+        jobPerPageFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
+        totalPagesRequest: (state) => {
+            state.loading = true;
+        },
+        totalPagesSuccess: (state, action) => {
+            state.totalPages = action.payload;
+        },
+        totalPagesFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
 
         jobDetailsRequest: (state) => {
             state.loading = true;
@@ -111,6 +135,8 @@ const JobSlice = createSlice({
 })
 
 export const { newPostRequest, newPostSuccess, newPostFail, allJobsRequest, allJobsSuccess, allJobsFail,
+    jobPerPageRequest, jobPerPageSuccess, jobPerPageFail,
+    totalPagesRequest, totalPagesSuccess, totalPagesFail,
     jobDetailsRequest, jobDetailsSuccess, jobDetailsFail,
     jobSaveRequest, jobSaveSuccess, jobSaveFail,
     getSavedJobsRequest, getSavedJobsSuccess, getSavedJobsFail

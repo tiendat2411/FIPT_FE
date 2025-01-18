@@ -11,6 +11,7 @@ import { RiLogoutBoxFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOrNot } from '../actions/UserActions';
+import { me as ME} from '../actions/UserActions';
 import { useNavigate } from 'react-router-dom';
 import { logoutClearState } from '../slices/UserSlice';
 import { motion } from 'framer-motion';
@@ -42,7 +43,7 @@ export const Navbar = () => {
               to="/"
               className="flex fixed left-24 justify-center items-center titleT"
             >
-              <MdOutlineBusinessCenter size={19} /> JOBLANE
+              <MdOutlineBusinessCenter size={19} /> FiMJ
             </Link>
 
             <Link to="/" className="cool-link">
@@ -75,7 +76,7 @@ export const Navbar = () => {
                       My Profile
                     </Menu.Item>
                   </Link>
-                  {me.role === 'admin' && (
+                  {localStorage.getItem('role') === 'ADMIN' && (
                     <Link to="/admin/dashboard">
                       <Menu.Item icon={<MdOutlineDashboard size={14} />}>
                         Dashboard
@@ -126,7 +127,7 @@ export const Navbar = () => {
             to="/"
             className="text-lg titleT flex justify-center items-center gap-1"
           >
-            <MdOutlineBusinessCenter size={19} /> JOBLANE
+            <MdOutlineBusinessCenter size={19} /> FiMJ
           </Link>
           <div className="flex justify-center items-center">
             <div className="pr-12">
@@ -148,7 +149,7 @@ export const Navbar = () => {
                         My Profile
                       </Menu.Item>
                     </Link>
-                    {me.role === 'admin' && (
+                    {localStorage.getItem('role') === 'ADMIN' && (
                       <Link to="/admin/dashboard">
                         <Menu.Item icon={<MdOutlineDashboard size={14} />}>
                           Dashboard

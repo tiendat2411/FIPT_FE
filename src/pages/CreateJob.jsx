@@ -8,6 +8,7 @@ import { BiBuilding } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux'
 import { createJobPost } from '../actions/JobActions'
 import { RxCross1 } from 'react-icons/rx'
+import { uploadImage } from '../actions/UserActions'
 
 
 
@@ -43,24 +44,32 @@ export const CreateJob = () => {
   const logoChange = (e) => {
     if (e.target.name === "logo") {
       const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setLogo(reader.result);
-          setLogoName(e.target.files[0].name)
-        }
-      };
-
-      reader.readAsDataURL(e.target.files[0]);
+      const file = e.target.files[0];
+      setLogo(file);
+      setLogoName(file.name);
     }
   }
 
 
 
-  const postHandler = (e) => {
+  const postHandler = async (e) => {
     e.preventDefault()
-    const skillsArr = skillsRequired.split(",")
-    const data = { title, description, companyName, location, logo, skillsRequired: skillsArr, experience, salary, category, employmentType }
+    let avatarUrl = logo;
+    if (avatarUrl instanceof File) {
+      const data1 = await dispatch(uploadImage(logo));
+      avatarUrl = data1;
+    }
 
+    const data = {
+      name: title,
+      description: description,
+      employerId: companyName,
+      address: location,
+      imageUrl: avatarUrl,
+      requirements: skillsRequired,
+      wage: salary,
+      categoryId: category,
+    }
     dispatch(createJobPost(data))
 
     setTitle("");
@@ -207,7 +216,7 @@ export const CreateJob = () => {
                   </div>
                   <textarea
                     value={skillsRequired} onChange={(e) => setSkillsRequired(e.target.value)}
-                    placeholder='Required Skills' type="text" className='outline-none w-full text-black bold-placeholder px-1 pr-3 py-2' />
+                    placeholder='Requirement' type="text" className='outline-none w-full text-black bold-placeholder px-1 pr-3 py-2' />
                 </div>
 
               </div>
@@ -218,16 +227,16 @@ export const CreateJob = () => {
 
                   <select required onChange={(e) => setCategory(e.target.value)} value={category} name="" id="large" className="block w-full px-6 py-2 text-base text-gray-900 border border-gray-300  bg-gray-50 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 ">
                     <option selected value="">Select Category</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Sales">Sales</option>
-                    <option value="Legal">Legal</option>
+                    <option value="1">Technology</option>
+                    <option value="2">Marketing</option>
+                    <option value="3">Finance</option>
+                    <option value="4">Sales</option>
+                    <option value="5">Legal</option>
                   </select>
                 </div>
 
-
-                {/* Employment Type */}
+                {/* 
+                Employment Type
                 <div className='bg-white flex justify-center items-center'>
 
 
@@ -242,7 +251,7 @@ export const CreateJob = () => {
 
 
 
-                </div>
+                </div> */}
 
 
               </div>
@@ -368,11 +377,11 @@ export const CreateJob = () => {
 
                 <select required onChange={(e) => setCategory(e.target.value)} value={category} name="" id="large" className="block w-full px-6 py-2 text-base text-gray-900 border border-gray-300  bg-gray-50 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 ">
                   <option selected value="">Select Category</option>
-                  <option value="full-time">Technology</option>
-                  <option value="part-time">Marketing</option>
-                  <option value="contract">Finance</option>
-                  <option value="internship">Sales</option>
-                  <option value="internship">Legal</option>
+                  <option value="1">Technology</option>
+                  <option value="2">Marketing</option>
+                  <option value="3">Finance</option>
+                  <option value="4">Sales</option>
+                  <option value="5">Legal</option>
                 </select>
               </div>
 
@@ -389,7 +398,7 @@ export const CreateJob = () => {
               </div>
 
 
-              {/* Employment Type */}
+              {/* Employment Type
               <div className='bg-white flex justify-center items-center'>
 
 
@@ -404,7 +413,7 @@ export const CreateJob = () => {
 
 
 
-              </div>
+              </div> */}
 
 
 

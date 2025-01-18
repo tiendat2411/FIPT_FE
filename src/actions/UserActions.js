@@ -14,10 +14,10 @@ export const registerUser = (userData) => async (dispatch) => {
     try {
         dispatch(registerRequest())
 
-        const { data } = await axios.post("http://localhost:3000/api/v1/register", userData);
+        const { data } = await axios.post("http://localhost:8080/user/register", userData);
 
         dispatch(registerSuccess())
-        localStorage.setItem('userToken', data.token)
+        // localStorage.setItem('userToken', data.token)
         dispatch(logOrNot())
         toast.success("Registration successful !")
 
@@ -40,6 +40,7 @@ export const loginUser = (userData) => async (dispatch) => {
 
         dispatch(loginSuccess())
         localStorage.setItem('userToken', data.result.token)
+        localStorage.setItem("role", data.result.role)
         dispatch(logOrNot(userData))
         dispatch(me())
         toast.success("Login successful !")
@@ -59,7 +60,7 @@ export const logOrNot = (userData) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem('userToken')}`
             }
         }
-        
+
         const body = {
             email: userData.email,
             password: userData.password,
@@ -86,8 +87,6 @@ export const me = () => async (dispatch) => {
         }
 
         const { data } = await axios.get("http://localhost:8080/user/myInfo", config);
-        
-        localStorage.setItem("role", data.result.role)
 
         dispatch(getMeSuccess(data.result))
 
@@ -129,7 +128,21 @@ export const updateProfile = (userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put("http://localhost:3000/api/v1/updateProfile", userData, config)
+        const body = {
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            age: userData.age,
+            email: userData.email,
+            avatar: userData.avatar,
+            resume: userData.resume,
+            phoneNumber: userData.phoneNumber,
+            description: userData.description,
+        }
+
+        console.log(userData.resume);
+
+
+        const { data } = await axios.put(`http://localhost:8080/user/update-profile/${userData.id}`, body, config)
 
         dispatch(updateProfileSuccess())
         toast.success("Profile Updated successfully !")
@@ -165,7 +178,7 @@ export const deleteAccount = (userData) => async (dispatch) => {
             localStorage.removeItem('userToken')
             dispatch(logOrNot())
             dispatch(logoutClearState())
-        }else{
+        } else {
             toast.error("Wrong Password !")
         }
 
@@ -178,4 +191,27 @@ export const deleteAccount = (userData) => async (dispatch) => {
 }
 
 
+export const uploadImage = (image) => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        };
 
+        const formData = new FormData();
+        formData.append('file', image);
+        formData.append('otherParam', 'value');
+
+        const { data } = await axios.post("http://localhost:8080/image/upload", formData, config);
+
+        // dispatch(me());
+
+        return data; // Trả về giá trị của data
+
+    } catch (err) {
+        console.log(err);
+        throw err; // Ném lỗi để xử lý bên ngoài nếu cần
+    }
+};

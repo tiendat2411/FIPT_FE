@@ -4,10 +4,10 @@ import { MetaData } from '../components/MetaData'
 import { AiOutlineMail } from 'react-icons/ai'
 import { MdPermIdentity, MdOutlineFeaturedPlayList } from 'react-icons/md'
 import { BsFileEarmarkText } from 'react-icons/bs'
-import {updateProfile, me as ME} from '../actions/UserActions'
+import { updateProfile, me as ME } from '../actions/UserActions'
 import { CgProfile } from 'react-icons/cg'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { uploadImage } from '../actions/UserActions'
 
 
 
@@ -15,80 +15,87 @@ export const EditProfile = () => {
 
     const dispatch = useDispatch()
     const { loading, me } = useSelector(state => state.user)
+    const userId = useSelector(state => state.user.me._id)
 
-
-  const [name, setName] = useState(me.name);
-  const [email, setEmail] = useState(me.email);
-  const [skills, setSkills] = useState(me.skills);
-
-  const [avatar, setAvatar] = useState("")
-  const [avatarName, setAvatarName] = useState("")
-
-  const [resume, setResume] = useState("")
-  const [resumeName, setResumeName] = useState("")
-
-
+    const [firstName, setFirstName] = useState(me.firstName || '');
+    const [lastName, setLastName] = useState(me.lastName || '');
+    const [email, setEmail] = useState(me.email || '');
+    const [description, setDescription] = useState(me.description || '');
+    const [age, setAge] = useState(me.age || '');
+    const [gender, setGender] = useState(me.gender || '');
+    const [phoneNumber, setPhoneNumber] = useState(me.phoneNumber || '');
   
 
+    const [avatar, setAvatar] = useState("")
+    const [avatarName, setAvatarName] = useState("")
+
+    const [resume, setResume] = useState("")
+    const [resumeName, setResumeName] = useState("")
 
 
-  const avatarChange = (e) => {
-    if (e.target.name === "avatar") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatar(reader.result);
-          setAvatarName(e.target.files[0].name)
+
+
+
+
+    const avatarChange = (e) => {
+        if (e.target.name === "avatar") {
+          const file = e.target.files[0];
+          setAvatar(file);
+          setAvatarName(file.name);
+    
         }
       };
 
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  }
 
 
-
-  const resumeChange = (e) => {
-    if (e.target.name === "resume") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setResume(reader.result);
-          setResumeName(e.target.files[0].name)
+    const resumeChange = (e) => {
+        if (e.target.name === "resume") {
+          const file = e.target.files[0];
+          setResume(file);
+          setResumeName(file.name);
         }
+    }
+
+
+    const editHandler = async (e) => {
+        e.preventDefault();
+    
+        let avatarUrl = avatar;
+        if (avatar instanceof File) {
+          const data1 = await dispatch(uploadImage(avatar));
+          avatarUrl = data1; 
+        }
+
+        let resumeUrl = resume;
+        if (resume instanceof File) {
+          const data2 = await dispatch(uploadImage(resume));
+          resumeUrl = data2; 
+        }
+
+        console.log(resumeUrl);
+    
+        const data = {
+          firstName: firstName,
+          lastName: lastName,
+          age: age,
+          email: email,
+          avatar: avatarUrl,
+          phoneNumber: phoneNumber,
+          description: description,
+          id: me._id,
+          resume: resumeUrl,
+        };
+        console.log(me._id);
+        dispatch(updateProfile(data));
       };
 
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  }
 
-
-    const editHandler = (e) => {
-        e.preventDefault()
-        let skillArr = skills
-        if(skills.constructor !== Array){
-             skillArr = skills.split(",")
-        }
-
-         const data = { 
-             newName: name, 
-             newEmail: email, 
-             newAvatar: avatar, 
-             newResume: resume, 
-             newSkills: skillArr  
-         }
-
-         dispatch(updateProfile(data))
-
-    }
-
-
-    useEffect(()=>{
-        dispatch(ME())
-        setName(me.name)
-        setEmail(me.email)
-        setSkills(me.skills)
-    },[dispatch])
+    // useEffect(()=>{
+    //     dispatch(ME())
+    //     setName(me.name)
+    //     setEmail(me.email)
+    //     setSkills(me.skills)
+    // },[dispatch])
 
     return (
         <>
@@ -110,11 +117,86 @@ export const EditProfile = () => {
 
 
                                     {/* Name */}
-                                    <div className='bg-white flex justify-center items-center'>
-                                        <div className='text-gray-600 px-2'>
-                                            <MdPermIdentity size={20} />
+                                    <div className='bg-white flex justify-center items-center gap-4'>
+                                        <div className='flex items-center'>
+                                            <div className='text-gray-600 px-2'>
+                                                <MdPermIdentity size={20} />
+                                            </div>
+                                            <input
+                                                value={firstName}
+                                                onChange={(e) => setFirstName(e.target.value)}
+                                                required
+                                                placeholder='Tên'
+                                                type="text"
+                                                className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2'
+                                            />
                                         </div>
-                                        <input value={name} onChange={(e) => setName(e.target.value)} required placeholder='Full name' type="text" className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2' />
+                                        <div className='border-l border-black h-full'></div> {/* Đường gạch dọc */}
+                                        <div className='flex items-center'>
+                                            <input
+                                                value={lastName}
+                                                onChange={(e) => setLastName(e.target.value)}
+                                                required
+                                                placeholder='Họ'
+                                                type="text"
+                                                className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2'
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className='bg-white flex justify-center items-center gap-4'>
+                                        <div className='flex items-center'>
+                                            <div className='text-gray-600 px-2'>
+                                                <MdPermIdentity size={20} />
+                                            </div>
+                                            <input
+                                                value={age}
+                                                onChange={(e) => setAge(e.target.value)}
+                                                required
+                                                placeholder='tuổi'
+                                                type="text"
+                                                className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2'
+                                            />
+                                        </div>
+                                        <div className='border-l border-black h-full'></div> {/* Đường gạch dọc */}
+                                        <div className='flex items-center'>
+                                            <input
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                                required
+                                                placeholder='Số điện thoại'
+                                                type="text"
+                                                className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2'
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Gender */}
+                                    <div className='bg-white flex justify-between items-center gap-4'>
+                                        <div className='flex items-center'>
+                                            <input
+                                                type="radio"
+                                                id="male"
+                                                name="gender"
+                                                value="true"
+                                                checked={gender === true}
+                                                onChange={() => setGender(true)}
+                                                className='mr-2 ml-3'
+                                            />
+                                            <label htmlFor="male" className='text-black'>Nam</label>
+                                        </div>
+                                        <div className='flex items-center'>
+                                            <input
+                                                type="radio"
+                                                id="female"
+                                                name="gender"
+                                                value="false"
+                                                checked={gender === false}
+                                                onChange={() => setGender(false)}
+                                                className='mr-2'
+                                            />
+                                            <label htmlFor="female" className='text-black mr-24'>Nữ</label>
+                                        </div>
                                     </div>
 
 
@@ -124,6 +206,14 @@ export const EditProfile = () => {
                                             <AiOutlineMail size={20} />
                                         </div>
                                         <input value={email} onChange={(e) => setEmail(e.target.value)} required placeholder='Email' type="email" className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2' />
+                                    </div>
+
+                                    {/* Mail */}
+                                    <div className='bg-white flex justify-center items-center'>
+                                        <div className='text-gray-600 px-2'>
+                                            <AiOutlineMail size={20} />
+                                        </div>
+                                        <input value={description} onChange={(e) => setDescription(e.target.value)} required placeholder='Mô tả' type="text" className='outline-none bold-placeholder w-full text-black px-1 pr-3 py-2' />
                                     </div>
 
 
@@ -163,19 +253,12 @@ export const EditProfile = () => {
                                         <p className='bg-gray-950 text-white text-xs'>Please select Image file</p>
                                     </div>
 
-                                    {/* Skills */}
-                                    <div className='bg-white flex justify-center items-center'>
+                                    {/* <div className='bg-white flex justify-center items-center'>
                                         <div className='text-gray-600 md:pb-12 pb-8 px-2'>
                                             <MdOutlineFeaturedPlayList size={20} />
                                         </div>
                                         <textarea value={skills} onChange={(e) => setSkills(e.target.value)} placeholder='Skills' type="text" className='outline-none w-full text-black bold-placeholder px-1 pr-3 py-2' />
-                                    </div>
-
-
-
-
-
-
+                                    </div> */}
 
 
                                     <div>

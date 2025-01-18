@@ -6,19 +6,23 @@ import {createApplicationRequest , createApplicationSuccess, createApplicationFa
     
 import {me} from '../actions/UserActions'
 import {toast} from 'react-toastify'
+import { tableBodyClasses } from '@mui/material'
 
-export const createApplication = (id) => async (dispatch) =>{
+export const createApplication = (body) => async (dispatch) =>{
     try{
         dispatch(createApplicationRequest())
 
         const config = {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('userToken')}`
+                Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+                // 'Content-Type': 'application/json'
             } 
         }
 
+        console.log(body)
 
-        const { data } = await axios.post(`http://localhost:3000/api/v1/createApplication/${id}`,config,config) ;
+
+        const { data } = await axios.post(`http://localhost:8080/applications`,body,config);
         
         console.log(data)
         dispatch(createApplicationSuccess())

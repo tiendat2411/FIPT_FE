@@ -29,9 +29,7 @@ const AdminSlice = createSlice({
             name: "",
             email: "",
             createdAt: "",
-            avatar: {
-                url: "",
-            },
+            avatar: ""
         },
         jobData: {
             name: "",

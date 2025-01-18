@@ -24,6 +24,7 @@ const UserSlice = createSlice({
             gender: "",
             avatar: "",
             phoneNumber: "",
+            resume: "",
             advancedProfile: {
                 _id: "",
                 yearCollege: 1,
@@ -68,8 +69,8 @@ const UserSlice = createSlice({
                 isActive: true,
                 creationDate: "",
             },
-            firstName: "",
-            lastName: "",
+            firstName: "a",
+            lastName: "b",
             age: 0,
             gender: "",
             avatar: "",
@@ -148,8 +149,23 @@ const UserSlice = createSlice({
             state.loading = true
         },
         getMeSuccess: (state, action) => {
-            state.loading = false
-            state.me = action.payload
+            state.loading = false;
+            state.me = {
+              ...state.me,
+              _id: action.payload.id,
+              firstName: action.payload.firstName,
+              lastName: action.payload.lastName,
+              age: action.payload.age,
+              gender: action.payload.gender,
+              avatar: action.payload.avatar,
+              resume: action.payload.resume,
+              phoneNumber: action.payload.phoneNumber,
+              email: action.payload.email,
+              account: {
+                ...state.me.account,
+                creationDate: action.payload.creationDate
+              }
+            };
         },
         getMeFail: (state, action) => {
             state.loading = false

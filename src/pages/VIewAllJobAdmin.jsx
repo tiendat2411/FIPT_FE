@@ -90,27 +90,27 @@ export const ViewAllJobAdmin = () => {
                   </thead>
                   <tbody>
 
-                    {allJobs && allJobs.filter(job => job._id)
+                    {allJobs && allJobs.filter(job => job.id)
                       .sort((a, b) => {
                         const dateA = new Date(a.createdAt);
                         const dateB = new Date(b.createdAt);
                         return dateB - dateA;
-                      }).map((job, i) => ( 
+                      }).map((job) => ( 
                         <tr className=" border-b hover:bg-gray-900 bg-gray-950 border-gray-700 text-white">
                           <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">
-                            {job._id}
+                            {job.id}
                           </th>
                           <td className="px-6 py-4">
-                            {job.title}
+                            {job.name}
                           </td>
                           <td className="px-6 py-4">
-                            {job.companyName}
+                            {job.employerName}
                           </td>
                           <td className="px-6 py-4">
-                            {job.location}
+                            {job.address}
                           </td>
                           <td className="px-6 py-4">
-                            {convertDateFormat(job.createdAt.substr(0, 10))}
+                            {convertDateFormat(job.recruitedDate.substr(0, 10))}
                           </td>
                           <td className="px-6 flex gap-4 py-4">
                             <Link to={`/admin/job/details/${job._id}`} className='text-blue-500 hover:text-blue-400 cursor-pointer'>

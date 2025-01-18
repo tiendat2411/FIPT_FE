@@ -80,7 +80,7 @@ export const Footer = () => {
               className="underline text-blue-400"
               to="https://sujal-tangde.netlify.app/"
             >
-              Sujal Tangde
+              Kurumeo
             </Link>
           </p>
           <p className="text-sm"> &copy;Copyright, All rights reserved.</p>
